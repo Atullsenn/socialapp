@@ -33,6 +33,13 @@ export default class user extends Model{
     email?: String;
 
     @Column({
+        type: DataType.STRING(),
+        field: 'password',
+       
+    })
+    password?: any;
+
+    @Column({
         type: DataType.BIGINT,
         field: 'mobile'
     })
