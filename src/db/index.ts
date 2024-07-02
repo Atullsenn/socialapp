@@ -1,5 +1,6 @@
 import {Sequelize} from 'sequelize-typescript';
 import {config, dialect} from '../config/db.config';
+import user from '../models/user.model';
 
 
 class Database{
@@ -22,7 +23,7 @@ class Database{
                 acquire:config.pool.aquire,
                 idle: config.pool.idle
             },
-            models:[]
+            models:[user]
         })
 
         await this.sequelize.authenticate().then(()=>{
