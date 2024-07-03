@@ -1,6 +1,6 @@
 import {Sequelize} from 'sequelize-typescript';
 import {config, dialect} from '../config/db.config';
-import user from '../models/user.model';
+import {user} from '../models/user.model';
 
 
 class Database{

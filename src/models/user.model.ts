@@ -1,11 +1,11 @@
-import { Model, DataType, Column, Table, CreatedAt  } from "sequelize-typescript";
+import { Model, DataType, Column, Table, CreatedAt, ForeignKey  } from "sequelize-typescript";
 
 
 @Table({
     tableName: "users"
 })
 
-export default class user extends Model{
+export class user extends Model{
     @Column({
         type: DataType.INTEGER,
         primaryKey: true,
@@ -29,7 +29,7 @@ export default class user extends Model{
     @Column({
         type: DataType.STRING(100),
         field: 'email'
-    })
+    }) 
     email?: String;
 
     @Column({
@@ -50,6 +50,12 @@ export default class user extends Model{
         field: 'address'
     })
     address?: String;
+
+    @Column({
+        type: DataType.BLOB,
+        field: 'profile'
+    })
+    profile?: Blob;
 
     @Column({
         type: DataType.DATE,

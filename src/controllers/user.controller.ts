@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import user from "../models/user.model";
+import {user} from "../models/user.model";
 import userRepo from "../repositories/user.repo";
 import { validationResult } from "express-validator";
 
@@ -27,6 +27,30 @@ export default class UsersController {
           message: "Some error occurred while data inserted."
         });
       }
+    }
+
+
+    async findAll(req: Request, res: Response){
+
+      try{
+
+        const userData = await userRepo.getAllUser();
+
+        return res.status(200).send({
+          success: true,
+          message: 'getting data successfully',
+          userData: userData
+        })
+
+      }
+
+      catch(err){
+        return res.status(500).send({
+          success: false,
+          message: 'network error'
+        })
+      }
+     
     }
   
   

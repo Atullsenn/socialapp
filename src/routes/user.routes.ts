@@ -14,7 +14,8 @@ class UserRoutes{
     }
 
     initializeRoutes(){
-        this.router.post('/', signupUserValidation, this.controller.create)
+        this.router.post('/', signupUserValidation, this.controller.create);
+        this.router.get('/', this.controller.findAll);
     }
 
 }

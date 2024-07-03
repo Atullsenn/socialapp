@@ -1,8 +1,9 @@
-import user from "../models/user.model";
+import {user} from "../models/user.model";
 import {GenerateSalt, GenratePassword} from '../utility/password.utility'
 
 interface IUserRepository{
     save(User: user): Promise<user>
+    getAllUser(User: user):Promise<user[]>
 }
 
 
@@ -26,6 +27,16 @@ class UserRepository implements IUserRepository{
             throw new Error("Failed to create User!");
           }
 
+    }
+
+
+    async getAllUser(): Promise<user[]> {
+      try {
+  
+        return await user.findAll({attributes:['first_name', 'last_name', 'email', 'mobile', 'address', 'profile']});
+      } catch (error) {
+        throw new Error("Failed to retrieve Tutorials!");
+      }
     }
 }
 
