@@ -4,6 +4,7 @@ import {GenerateSalt, GenratePassword} from '../utility/password.utility'
 interface IUserRepository{
     save(User: user): Promise<user>
     getAllUser(User: user):Promise<user[]>
+    getUserById(UserId: number): Promise<user | null>
 }
 
 
@@ -38,6 +39,18 @@ class UserRepository implements IUserRepository{
         throw new Error("Failed to retrieve Tutorials!");
       }
     }
+
+
+
+    async getUserById(UserId: number): Promise<user | null> {
+      try {
+        return await user.findByPk(UserId, {attributes:['first_name', 'last_name', 'mobile', 'email', 'profile', 'address']});
+      } catch (error) {
+        throw new Error("Failed to retrieve user!");
+      }
+    }
+ 
+
 }
 
 

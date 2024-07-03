@@ -52,6 +52,35 @@ export default class UsersController {
       }
      
     }
+
+
+    async findById(req: Request, res: Response){
+      const id:number = parseInt(req.params.id)
+      try{
+        const user = await userRepo.getUserById(id)
+        if(user){
+          return res.status(200).send({
+            success: true,
+            message: 'Getting data successfully',
+            userData: user
+          })
+        }
+
+        else{
+          return res.status(400).send({
+            success: false,
+            message: 'user not found'
+          })
+        }
+      }
+
+      catch(err){
+        return res.status(500).send({
+          success: false,
+          message: 'Network Error'
+        })
+      }
+    }
   
   
     
