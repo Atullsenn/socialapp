@@ -17,6 +17,7 @@ class Database{
             password:'',
             host:config.HOST,
             dialect: dialect,
+            logging: false,
             pool:{
                 max:config.pool.max,
                 min:config.pool.min,

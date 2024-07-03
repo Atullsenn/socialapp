@@ -55,7 +55,7 @@ export default class UsersController {
 
 
     async findById(req: Request, res: Response){
-      const id:number = parseInt(req.params.id)
+      const id:string = req.params.id
       try{
         const user = await userRepo.getUserById(id)
         if(user){
@@ -78,6 +78,34 @@ export default class UsersController {
         return res.status(500).send({
           success: false,
           message: 'Network Error'
+        })
+      }
+    }
+
+
+    async updateUser(req: Request, res:Response){
+      let User:user = req.body;
+      try{
+
+        const num = await userRepo.update(User);
+
+      if (num == 1) {
+        res.status(200).send({
+          success: true,
+          message: "User updated successfully"
+        })
+      } else {
+        res.send({
+          success: false,
+          message: `Cannot update user with id=${User.id}.`
+        });
+      }
+      }
+
+      catch(err){
+        return res.status(500).send({
+          success: false,
+          message: 'Network error'
         })
       }
     }

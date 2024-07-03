@@ -4,7 +4,8 @@ import {GenerateSalt, GenratePassword} from '../utility/password.utility'
 interface IUserRepository{
     save(User: user): Promise<user>
     getAllUser(User: user):Promise<user[]>
-    getUserById(UserId: number): Promise<user | null>
+    getUserById(UserId: string): Promise<user | null>
+    update(User:user): Promise<number>
 }
 
 
@@ -42,11 +43,33 @@ class UserRepository implements IUserRepository{
 
 
 
-    async getUserById(UserId: number): Promise<user | null> {
+    async getUserById(UserId: string): Promise<user | null> {
       try {
         return await user.findByPk(UserId, {attributes:['first_name', 'last_name', 'mobile', 'email', 'profile', 'address']});
       } catch (error) {
         throw new Error("Failed to retrieve user!");
+      }
+    }
+
+
+    async update(User: user): Promise<number>{
+      const {id, first_name, last_name, email, mobile, address} = User;
+
+      try{
+
+        const affectedRows = await user.update(
+          { first_name, last_name, email, mobile, address },
+          { where: { id: id } }
+        );
+
+        return affectedRows[0]
+  
+
+
+      }
+      
+      catch(err){
+        throw new Error('Failed to update user data')
       }
     }
  

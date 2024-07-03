@@ -17,6 +17,8 @@ class UserRoutes{
         this.router.post('/', signupUserValidation, this.controller.create);
         this.router.get('/', this.controller.findAll);
         this.router.get('/:id', this.controller.findById);
+        this.router.put('/updateUser', this.controller.updateUser)
+        
     }
 
 }

@@ -1,4 +1,5 @@
-import { Model, DataType, Column, Table, CreatedAt, ForeignKey  } from "sequelize-typescript";
+import { UUID } from "crypto";
+import { Model, DataType, Column, Table} from "sequelize-typescript";
 
 
 @Table({
@@ -7,12 +8,13 @@ import { Model, DataType, Column, Table, CreatedAt, ForeignKey  } from "sequeliz
 
 export class user extends Model{
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
+        allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
-        field:"id"
+        field: 'id'
     })
-    id?: number;
+    id?: UUID;
 
     @Column({
         type: DataType.STRING(50),
