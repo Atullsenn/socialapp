@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import {user} from "../models/user.model";
+import {user, user_address} from "../models/user.model";
 import userRepo from "../repositories/user.repo";
 import { validationResult } from "express-validator";
 
@@ -14,9 +14,10 @@ export default class UsersController {
           errors: errors.array()
         })
       }
-  
+   
       try {
         const user: user = req.body;
+        // const user_address:user_address = req.body;
        
   
         const savedUser = await userRepo.save(user);
@@ -24,7 +25,7 @@ export default class UsersController {
         res.status(201).send(savedUser);
       } catch (err) {
         res.status(500).send({
-          message: "Some error occurred while data inserted."
+          message: "Some error occurred while data inserted." 
         });
       }
     }
@@ -35,7 +36,7 @@ export default class UsersController {
       try{
 
         const userData = await userRepo.getAllUser();
-
+  
         return res.status(200).send({
           success: true,
           message: 'getting data successfully',
@@ -55,7 +56,7 @@ export default class UsersController {
 
 
     async findById(req: Request, res: Response){
-      const id:string = req.params.id
+      const id:number = parseInt(req.params.id)
       try{
         const user = await userRepo.getUserById(id)
         if(user){
@@ -85,21 +86,24 @@ export default class UsersController {
 
     async updateUser(req: Request, res:Response){
       let User:user = req.body;
+      User.id = parseInt(req.params.id);
+      User.profile = req.file?.filename
+      
       try{
 
         const num = await userRepo.update(User);
+       
 
-      if (num == 1) {
-        res.status(200).send({
-          success: true,
-          message: "User updated successfully"
-        })
-      } else {
-        res.send({
-          success: false,
-          message: `Cannot update user with id=${User.id}.`
-        });
-      }
+        if (num == 1) {
+          res.send({
+            message: " user was updated successfully."
+          });
+        } else {
+          res.send({
+            message: `Cannot update User with id=${User.id}. Maybe User was not found or req.body is empty!`
+          });
+        }
+  
       }
 
       catch(err){

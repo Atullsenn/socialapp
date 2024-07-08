@@ -11,7 +11,6 @@ const signupUserValidation = [
         min: 10,
         max: 10
     }),
-    check('address', 'address is required').not().isEmpty(),
     check('password', 'password must be greater than 6 character and atleast containg should be one uppercase, one lowercase and one spacial character and one number').isStrongPassword({
         minLength:6,
         minLowercase:1,
